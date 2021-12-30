@@ -1,0 +1,31 @@
+name: "CICD SSH Logs attemps"
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy-to-ec2:
+    name: "Ubuntu EC2"
+    runs-on: ubuntu:20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configuration SSH
+        env:
+         SSH_USER: ${{ secrets.EC2_USER }}
+         SSH_KEY: ${{ secrets.EC2_PEM }}
+         SSH_HOST: ${{ secrets.EC2_HOST }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/ec2.pem
+          chmod 400 ~/.ssh/ec2.pem
+          cat >> ~/.ssh/config << END
+          Host Deployment
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/ec2.pem
+            StrictHostKeyChecking=no
+          END
+      - name: Move directory git repo
+        run: cd ssh-login-attempts
+      - name: pull from github
+        run: git pull
