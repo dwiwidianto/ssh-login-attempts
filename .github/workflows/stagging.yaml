@@ -25,8 +25,8 @@ jobs:
             IdentityFile ~/.ssh/ec2.pem
             StrictHostKeyChecking=no
           END
-      - name: Connect EC2, Remove Container
-        run: ssh development
+      - name: Connect EC2
+        run: ssh -i "~/.ssh/ec2.pem" User@HostName
       - name: Move directory git repo
         run: cd /home/ubuntu/ssh-login-attempts
       - name: pull from github
