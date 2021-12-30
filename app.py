@@ -18,4 +18,5 @@ app = Flask(__name__)
 def home():
     return '<pre>'+get_check_output()+'</pre>'
 
-app.run(debug=True)
+# app.run(debug=True)
+app.run(host='0.0.0.0', port=80)
