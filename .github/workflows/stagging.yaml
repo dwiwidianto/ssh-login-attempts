@@ -26,6 +26,6 @@ jobs:
             StrictHostKeyChecking=no
           END
       - name: Move directory git repo
-        run: cd ssh-login-attempts
+        run: cd /home/ubuntu/ssh-login-attempts
       - name: pull from github
         run: git pull
