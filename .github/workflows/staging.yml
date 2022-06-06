@@ -26,6 +26,6 @@ jobs:
             StrictHostKeyChecking=no
           END
       - name: Connect Compute Engine
-        run: ssh development
+        run: ssh development 'pwd'  || true
       - name: Move directory git repo
         run: mkdir widi-githubaction
