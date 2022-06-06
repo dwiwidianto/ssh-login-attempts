@@ -26,5 +26,5 @@ jobs:
             StrictHostKeyChecking=no
           END
       - name: Connect EC2 & Remove All Container & Pull from Registry & Start
-        run: ssh development 'touch widi-deploy'
+        run: ssh development 'docker pull nginx'
 
