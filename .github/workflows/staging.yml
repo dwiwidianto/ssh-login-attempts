@@ -5,27 +5,26 @@ on:
 
 jobs:
   deploy-to-ec2:
-    name: "Ubuntu EC2"
-    runs-on: ubuntu-20.04
+    name: "Deploy to ec2 from registry docker hub"
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Configuration SSH
+      - name: configuration SSH
         env:
-         SSH_USER: ${{ secrets.SSH_USER }}
-         SSH_KEY: ${{ secrets.SSH_PEM }}
-         SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USERNAME }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/gcp.pem
           chmod 400 ~/.ssh/gcp.pem
-          cat >> ~/.ssh/config << END
-          Host Deployment
+          cat >>~/.ssh/config <<END
+          Host development
             HostName $SSH_HOST
             User $SSH_USER
             IdentityFile ~/.ssh/gcp.pem
             StrictHostKeyChecking=no
           END
-      - name: Connect Compute Engine
-        run: ssh development || true
-      - name: Move directory git repo
-        run: touch widi-githubaction
+      - name: Connect EC2 & Remove All Container & Pull from Registry & Start
+        run: ssh development 'touch widi-deploy'
+
