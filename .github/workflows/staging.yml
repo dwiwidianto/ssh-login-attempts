@@ -22,7 +22,7 @@ jobs:
           Host Deployment
             HostName $SSH_HOST
             User $SSH_USER
-            IdentityFile ~/.ssh/ec2.pem
+            IdentityFile ~/.ssh/gcp.pem
             StrictHostKeyChecking=no
           END
       - name: Connect Compute Engine
