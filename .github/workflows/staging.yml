@@ -26,6 +26,6 @@ jobs:
             StrictHostKeyChecking=no
           END
       - name: Connect Compute Engine
-        run: ssh -i "~/.ssh/gcp.pem" User@HostName
+        run: ssh -i ~/.ssh/gcp.pem User@HostName
       - name: Move directory git repo
         run: mkdir widi-githubaction
