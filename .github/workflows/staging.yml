@@ -12,12 +12,15 @@ jobs:
       - name: configuration SSH
         env:
           SSH_USER: ${{ secrets.SSH_USERNAME }}
-          SSH_KEY: ${{ secrets.SSH_KEY }}
+          ID_RSA : ${{ secrets.ID_RSA  }}
+          ID_RSA_PUB: ${{ secrets.ID_RSA_PUB }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/gcp.pem
-          chmod 400 ~/.ssh/gcp.pem
+          echo "$ID_RSA" > ~/.ssh/id_rsa
+          echo "$ID_RSA_PUB" > ~/.ssh/id_rsa.pub
+          chmod 600 ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa.pub
           cat >>~/.ssh/config <<END
           Host development
             HostName $SSH_HOST
@@ -26,5 +29,5 @@ jobs:
             StrictHostKeyChecking=no
           END
       - name: Connect EC2 & Remove All Container & Pull from Registry & Start
-        run: ssh development 'docker pull aprian1337/thukul'
+        run: ssh development 'touch widi-gitaction'
 
